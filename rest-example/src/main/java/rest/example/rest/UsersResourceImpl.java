@@ -11,6 +11,8 @@ import rest.example.data.UserRepository;
 import rest.example.model.User;
 
 /**
+ * Implementation of rest service for {@link UsersResource}.
+ * 
  * @author smustafov
  */
 @RequestScoped
@@ -29,6 +31,9 @@ public class UsersResourceImpl implements UsersResource {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @throws WebApplicationException
+	 *             - if there is no user with the given id
 	 */
 	@Override
 	public User getUserById(int id) {
@@ -41,6 +46,9 @@ public class UsersResourceImpl implements UsersResource {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @throws WebApplicationException
+	 *             - if there is no user with the given id
 	 */
 	@Override
 	public void removeUser(int id) {

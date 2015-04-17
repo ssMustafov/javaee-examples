@@ -1,6 +1,8 @@
 package rest.example.model;
 
 /**
+ * Represents a user.
+ * 
  * @author smustafov
  */
 public class User {
