@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -18,6 +20,10 @@ import org.hibernate.validator.constraints.Email;
  * @author smustafov
  */
 @Entity(name = "appuser")
+@NamedQueries({
+		@NamedQuery(name = "User.getAllUsers", query = "SELECT auser FROM appuser auser"),
+		@NamedQuery(name = "User.getUserById", query = "SELECT auser FROM appuser auser WHERE auser.id = :id"),
+		@NamedQuery(name = "User.getUserByEmail", query = "SELECT auser FROM appuser auser WHERE auser.email = :email") })
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -1304362844502161162L;
@@ -38,6 +44,16 @@ public class User implements Serializable {
 
 	@Digits(fraction = 1, integer = 100, message = "not valid age")
 	private int age;
+
+	/**
+	 * Setter method for id.
+	 *
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	/**
 	 * Getter method for id.

@@ -60,7 +60,9 @@ public interface UsersResource {
 	 * @param email
 	 *            - email of the user to be added
 	 * @param age
-	 *            -age of the user to be added
+	 *            - age of the user to be added
+	 * @param addresses
+	 *            - list of address of the user
 	 */
 	@POST
 	void addUser(@FormParam("name") String name, @FormParam("email") String email,
