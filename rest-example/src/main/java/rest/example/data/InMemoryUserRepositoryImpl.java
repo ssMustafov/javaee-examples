@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import rest.example.annotations.InMemory;
 import rest.example.model.User;
 
 /**
  * @author smustafov
  */
 @ApplicationScoped
+@InMemory
 public class InMemoryUserRepositoryImpl implements UserRepository {
 
 	private List<User> users = new ArrayList<>();

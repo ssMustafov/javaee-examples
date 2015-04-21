@@ -1,22 +1,28 @@
 package rest.example.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 /**
  * Represents a user.
  * 
  * @author smustafov
  */
-public class User {
+@Entity(name = "appuser")
+public class User implements Serializable {
 
-	private static int idCounter = 0;
+	private static final long serialVersionUID = -1304362844502161162L;
+
+	@Id
+	@GeneratedValue
 	private int id;
+
 	private String name;
 	private String email;
 	private int age;
-
-	public User() {
-		id = idCounter;
-		idCounter++;
-	}
 
 	/**
 	 * Getter method for id.

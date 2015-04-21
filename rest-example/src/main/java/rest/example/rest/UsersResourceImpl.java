@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import rest.example.annotations.InMemory;
 import rest.example.data.UserRepository;
 import rest.example.model.User;
 
@@ -19,6 +20,7 @@ import rest.example.model.User;
 public class UsersResourceImpl implements UsersResource {
 
 	@Inject
+	@InMemory
 	private UserRepository repository;
 
 	/**
