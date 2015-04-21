@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
-import rest.example.annotations.InMemory;
 import rest.example.data.UserRepository;
 import rest.example.model.User;
 
@@ -20,7 +19,6 @@ import rest.example.model.User;
 public class UsersResourceImpl implements UsersResource {
 
 	@Inject
-	@InMemory
 	private UserRepository repository;
 
 	/**
@@ -69,7 +67,21 @@ public class UsersResourceImpl implements UsersResource {
 		user.setAge(age);
 		user.setEmail(email);
 		user.setName(name);
+
+		validateUser(user);
+
 		repository.add(user);
 	}
 
+	private void validateUser(User user) {
+		if (emailAlreadyExists(user.getEmail())) {
+			throw new WebApplicationException(Response.Status.BAD_REQUEST);
+		}
+	}
+
+	private boolean emailAlreadyExists(String email) {
+		User user = null;
+		user = repository.getUserByEmail(email);
+		return user != null;
+	}
 }

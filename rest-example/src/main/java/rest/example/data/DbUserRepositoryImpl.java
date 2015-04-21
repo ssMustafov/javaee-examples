@@ -4,7 +4,11 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import rest.example.model.User;
 
@@ -14,8 +18,6 @@ import rest.example.model.User;
 @Stateless
 public class DbUserRepositoryImpl implements UserRepository {
 
-	// @PersistenceUnit(unitName = "rest-example")
-	// private EntityManagerFactory entityManager;
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -24,7 +26,7 @@ public class DbUserRepositoryImpl implements UserRepository {
 	 */
 	@Override
 	public void add(User user) {
-
+		entityManager.persist(user);
 	}
 
 	/**
@@ -32,7 +34,9 @@ public class DbUserRepositoryImpl implements UserRepository {
 	 */
 	@Override
 	public User remove(int id) {
-		return null;
+		User user = getUserById(id);
+		entityManager.remove(user);
+		return user;
 	}
 
 	/**
@@ -40,7 +44,7 @@ public class DbUserRepositoryImpl implements UserRepository {
 	 */
 	@Override
 	public User getUserById(int id) {
-		return null;
+		return entityManager.find(User.class, id);
 	}
 
 	/**
@@ -48,7 +52,31 @@ public class DbUserRepositoryImpl implements UserRepository {
 	 */
 	@Override
 	public List<User> getAllUsers() {
-		return (List<User>) entityManager.createQuery("from appuser").getResultList();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> criteria = builder.createQuery(User.class);
+		Root<User> user = criteria.from(User.class);
+		criteria.select(user);
+		return entityManager.createQuery(criteria).getResultList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User getUserByEmail(String email) throws NoResultException {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<User> criteria = builder.createQuery(User.class);
+		Root<User> user = criteria.from(User.class);
+		criteria.select(user).where(builder.equal(user.get("email"), email));
+
+		User foundUser = null;
+		try {
+			foundUser = entityManager.createQuery(criteria).getSingleResult();
+		} catch (NoResultException e) {
+			// no result ok to go
+		}
+
+		return foundUser;
 	}
 
 }

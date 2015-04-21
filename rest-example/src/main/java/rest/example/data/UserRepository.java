@@ -44,4 +44,13 @@ public interface UserRepository {
 	 */
 	List<User> getAllUsers();
 
+	/**
+	 * Finds and returns {@link User} with given email.
+	 * 
+	 * @param email
+	 *            - the email of the user to be found
+	 * @return the found user; if there is no user with that email returns null
+	 */
+	User getUserByEmail(String email);
+
 }

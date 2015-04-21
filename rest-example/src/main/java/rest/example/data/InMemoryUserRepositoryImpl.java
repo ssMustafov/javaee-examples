@@ -55,4 +55,17 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 		return users;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User getUserByEmail(String email) {
+		for (User user : users) {
+			if (user.getEmail().equals(email)) {
+				return user;
+			}
+		}
+		return null;
+	}
+
 }
