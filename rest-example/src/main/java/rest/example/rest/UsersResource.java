@@ -21,13 +21,15 @@ import rest.example.model.User;
 @Path("users")
 public interface UsersResource {
 
+	static final String JSON_UTF8 = MediaType.APPLICATION_JSON + ";charset=utf-8";
+
 	/**
 	 * Returns json with the all users.
 	 * 
 	 * @return - all users' data as json
 	 */
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(JSON_UTF8)
 	List<User> getAllUsers();
 
 	/**
@@ -39,7 +41,7 @@ public interface UsersResource {
 	 */
 	@GET
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(JSON_UTF8)
 	User getUserById(@PathParam("id") int id);
 
 	/**
